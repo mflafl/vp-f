@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>Vp</title>
+  <title>Viewplatforma</title>
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,5 +10,9 @@
 </head>
 <body>
   <app-root>Loading...</app-root>
+  <form enctype="multipart/form-data" method="post" action="http://0.0.0.0:3000/api/v1/video">
+    <input multiple name="video[files][]" type="file" />
+    <input type="submit" value="Go"/>
+  </form>
 </body>
 </html>

@@ -4,17 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { VideoListComponent } from './videoList/videoList.component';
+
+import { VideoService } from './video.service';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent, VideoListComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [VideoService],
+  bootstrap: [AppComponent, VideoListComponent, ]
 })
 export class AppModule { }

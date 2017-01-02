@@ -17,6 +17,6 @@ export class VideoListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.videoService.loadList().then(videos => {console.log(videos); this.items = videos});
+    this.videoService.loadList().then(videos => this.items = videos);
   }
 }

@@ -16,11 +16,11 @@ export class VideoService {
       .then(response => response.json() as Video[])
       .catch(this.handleError);
   }
-  getHero(id: number): Promise<Video> {
-    const url = `${this.apiBase}/video}/${id}`;
+  loadItem(id: number): Promise<Video> {
+    const url = `${this.apiBase}/video/${id}`;
     return this.http.get(url)
       .toPromise()
-      .then(response => response.json().data as Video)
+      .then(response => response.json() as Video)
       .catch(this.handleError);
   }
   delete(id: number): Promise<void> {

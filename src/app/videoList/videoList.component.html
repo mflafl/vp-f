@@ -1,5 +1,7 @@
 <ul class="list-group">
-  <li class="list-group-item" *ngFor="let item of items" (click)="select(item)">
-    {{item.name}}
+  <li class="list-group-item" *ngFor="let item of items">
+    <a [routerLink]="['/video', item.id]">
+      {{item.name}}
+    </a>
   </li>
 </ul>

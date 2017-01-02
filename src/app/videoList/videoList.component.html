@@ -1,7 +1,5 @@
-<h2>Video List</h2>
-<p><i>Pick a hero from the list</i></p>
 <ul class="list-group">
   <li class="list-group-item" *ngFor="let item of items" (click)="select(item)">
-    {{item.title}}
+    {{item.name}}
   </li>
 </ul>

@@ -10,10 +10,13 @@ import { Video } from '../video';
 })
 
 export class VideoListComponent implements OnInit {
+  items: Video[];
+
   constructor(
-    private videoService: VideoService) { }
+    private videoService: VideoService
+  ) { }
 
   ngOnInit(): void {
-    this.videoService.loadList().then(videos => this.videos = videos);;
+    this.videoService.loadList().then(videos => {console.log(videos); this.items = videos});
   }
 }

@@ -18,6 +18,6 @@ import { VideoService } from './video.service';
     HttpModule,
   ],
   providers: [VideoService],
-  bootstrap: [AppComponent, VideoListComponent, ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,18 @@
-<h1>
-  {{title}}
-</h1>
-<video-list></video-list>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <video-list></video-list>
+      <form enctype="multipart/form-data" method="post" action="http://0.0.0.0:3000/api/v1/video">
+        <input multiple name="video[files][]" type="file" />
+        <input type="submit" value="Go"/>
+      </form>
+    </div>
+    <div class="col-sm-9">
+      <h1>
+        {{title}}
+      </h1>
+    </div>
+  </div>
+</div>
 
-<form enctype="multipart/form-data" method="post" action="http://0.0.0.0:3000/api/v1/video">
-  <input multiple name="video[files][]" type="file" />
-  <input type="submit" value="Go"/>
-</form>
+

@@ -1,5 +1,5 @@
 export class Video {
   id: number;
-  size: number;
-  title: string;
+  file_file_size: number;
+  name: string;
 }

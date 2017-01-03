@@ -30,11 +30,11 @@ export class VideoService {
       .then(() => null)
       .catch(this.handleError);
   }
-  create(name: string): Promise<Video> {
+  createItem(item: Video): Promise<Video> {
     return this.http
-      .post(`${this.apiBase}/video`, JSON.stringify({name: name}), {headers: this.headers})
+      .post(`${this.apiBase}/video/url`, JSON.stringify(item), {headers: this.headers})
       .toPromise()
-      .then(res => res.json().data)
+      .then(res => res.json())
       .catch(this.handleError);
   }
   update(hero: Video): Promise<Video> {

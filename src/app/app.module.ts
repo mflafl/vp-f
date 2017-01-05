@@ -10,6 +10,7 @@ import { VideoAddComponent } from './videoAdd/videoAdd.component';
 import { VideoComponent } from './video/video.component';
 
 import { VideoService } from './video.service';
+import { WebSocketService } from './websocket.service';
 
 const appRoutes: Routes = [
   { path: 'video/:id', component: VideoComponent },
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [VideoService],
+  providers: [VideoService, WebSocketService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

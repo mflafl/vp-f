@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { WebSocketService } from './websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +7,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app works!';
+
+  constructor(
+    private webSocketService: WebSocketService
+  ) { }
+
+  ngOnInit(): void {
+    this.webSocketService.start( 'ws://localhost:3000/cable' );
+  }
 }

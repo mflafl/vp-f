@@ -22,4 +22,9 @@ export class VideoComponent implements OnInit {
       .switchMap((params: Params) => this.videoService.loadItem(+params['id']))
       .subscribe(video => this.video = video);
   }
+
+  delete(event): void {
+    event.preventDefault();
+    this.videoService.deleteItem(this.video.id);
+  }
 }

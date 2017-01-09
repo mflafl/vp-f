@@ -23,8 +23,8 @@ export class VideoService {
       .then(response => response.json() as Video)
       .catch(this.handleError);
   }
-  delete(id: number): Promise<void> {
-    const url = `${this.apiBase}/video}/${id}`;
+  deleteItem(id: number): Promise<void> {
+    const url = `${this.apiBase}/video/${id}`;
     return this.http.delete(url, {headers: this.headers})
       .toPromise()
       .then(() => null)

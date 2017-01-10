@@ -1,5 +1,9 @@
-<form (submit)="save()" enctype="multipart/form-data" method="post">
+<form (submit)="save()">
   <input [(ngModel)]="item.url" name="video[url]" type="text" class="form-control" />
-  <input [(ngModel)]="item.files" multiple name="video[files][]" type="file" />
+  <input class="btn btn-primary" type="submit" value="Go" />
+</form>
+
+<form (submit)="upload()">
+  <input (change)="addFile($event)" multiple type="file" />
   <input class="btn btn-primary" type="submit" value="Go" />
 </form>

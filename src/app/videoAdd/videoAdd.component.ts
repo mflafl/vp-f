@@ -11,6 +11,7 @@ import { Video } from '../video';
 
 export class VideoAddComponent implements OnInit {
   item: Video = new Video();
+  filesFormData: any = false;
 
   constructor(
     private videoService: VideoService
@@ -18,6 +19,24 @@ export class VideoAddComponent implements OnInit {
 
   ngOnInit(): void {
     // this.videoService.loadList().then(videos => this.items = videos);
+  }
+
+  addFile(event): void {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      this.filesFormData = new FormData();
+
+      Array.from(fileList).forEach(item => {
+        this.filesFormData.append('video[files][]', item, item.name);
+      });
+
+    } else {
+      this.filesFormData = false;
+    }
+  }
+
+  upload(): void {
+    this.videoService.upload(this.filesFormData);
   }
 
   save(): void {

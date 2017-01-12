@@ -1,8 +1,7 @@
 <div *ngIf="video">
   <h1>{{ video.name }}</h1>
   <section>
-    <video width="480" controls src="{{ video.url }}">
-    </video>
+    <player #player [video]='video'></player>
   </section>
   <a href="#" (click)="delete($event)">Delete</a>
 </div>

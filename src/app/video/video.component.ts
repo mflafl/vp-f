@@ -3,7 +3,6 @@ import {Renderer, QueryList, ViewChildren, Component, OnInit, AfterViewInit} fro
 import { ActivatedRoute, Params } from '@angular/router';
 import { VideoService } from '../video.service';
 import { Video } from '../video';
-import { VideoPlayerComponent } from '../player/player.component';
 
 @Component({
   selector: 'video-detail',
@@ -12,7 +11,10 @@ import { VideoPlayerComponent } from '../player/player.component';
 
 export class VideoComponent implements OnInit, AfterViewInit {
   video: Video;
-  @ViewChildren(VideoPlayerComponent) player: QueryList<VideoPlayerComponent>;
+  @ViewChildren('player') player: any;
+  duration: number = 0;
+  cropFrom: number = 0;
+  cropTo: number = 0;
 
   constructor(
     private videoService: VideoService,
@@ -27,13 +29,19 @@ export class VideoComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    var self = this;
     this.player.changes.subscribe(() => {
-      let video = videojs(this.player.first.el.nativeElement);
-      setInterval(function() {
-        console.log(video.duration());
-      }, 1400)
-
+      let video = videojs(this.player.first.nativeElement).on('loadedmetadata', function() {
+        let duration:number = Math.ceil(this.duration());
+        self.duration = duration;
+        self.cropTo = duration;
+      });
     });
+  }
+
+  crop(event): void {
+    event.preventDefault();
+    this.videoService.crop(this.video.id, this.cropFrom, this.cropTo);
   }
 
   delete(event): void {

@@ -1,7 +1,12 @@
 <div *ngIf="video">
   <h1>{{ video.name }}</h1>
   <section>
-    <player #player [video]='video'></player>
+    <video class="video-js" #player width="640" controls src="{{ video.url }}"></video>
   </section>
-  <a href="#" (click)="delete($event)">Delete</a>
+  <a href="#" (click)="delete($event)"><i class="fa fa-remove"></i></a>
+  <a href="#" (click)="crop($event)"><i class="fa fa-cut"></i></a>
+  <div>
+    <input [(ngModel)]="cropFrom" type="range" min="0" max="{{duration}}" step="1">
+    <input [(ngModel)]="cropTo" type="range" min="0" max="{{duration}}" step="1">
+  </div>
 </div>

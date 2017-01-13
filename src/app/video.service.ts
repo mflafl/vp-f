@@ -42,6 +42,15 @@ export class VideoService {
       .catch(this.handleError);
   }
 
+  crop(id: number, from: number, to: number) {
+    const url = `${this.apiBase}/video/${id}/crop`;
+    return this.http
+      .post(url, JSON.stringify({from: from, to: to}), {headers: this.headers})
+      .toPromise()
+      .then(res => res.json())
+      .catch(this.handleError);
+  }
+
   upload(files: any): Promise<Video> {
     // let headers = new Headers({'Content-Type': undefined});
     return this.http

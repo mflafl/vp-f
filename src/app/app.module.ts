@@ -8,7 +8,6 @@ import { AppComponent } from './app.component';
 import { VideoListComponent } from './videoList/videoList.component';
 import { VideoAddComponent } from './videoAdd/videoAdd.component';
 import { VideoComponent } from './video/video.component';
-import { VideoPlayerComponent } from './player/player.component';
 
 import { VideoService } from './video.service';
 import { WebSocketService } from './websocket.service';
@@ -20,7 +19,7 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent, VideoComponent, VideoListComponent, VideoAddComponent, VideoPlayerComponent
+    AppComponent, VideoComponent, VideoListComponent, VideoAddComponent
   ],
   imports: [
     BrowserModule,

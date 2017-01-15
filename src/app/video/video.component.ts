@@ -3,6 +3,10 @@ import {Renderer, QueryList, ViewChildren, Component, OnInit, AfterViewInit} fro
 import { ActivatedRoute, Params } from '@angular/router';
 import { VideoService } from '../video.service';
 import { Video } from '../video';
+import {Subject} from "rxjs";
+
+declare var jQuery:any;
+declare var $:any;
 
 @Component({
   selector: 'video-detail',
@@ -12,15 +16,16 @@ import { Video } from '../video';
 export class VideoComponent implements OnInit, AfterViewInit {
   video: Video;
   @ViewChildren('player') player: any;
-  duration: number = 0;
-  cropFrom: number = 0;
-  cropTo: number = 0;
+  @ViewChildren('crop') cropView: any;
+  duration: any = new Subject();
+  cropValue: number = 0;
 
   constructor(
     private videoService: VideoService,
     private route: ActivatedRoute,
     private renderer: Renderer
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.route.params
@@ -30,18 +35,27 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     var self = this;
+
+    this.duration.subscribe((value) => {
+      $(this.cropView.first.nativeElement).ionRangeSlider({
+        type:'double',
+        min: 0,
+        max: value,
+        grid: true,
+      });
+    });
+
     this.player.changes.subscribe(() => {
       let video = videojs(this.player.first.nativeElement).on('loadedmetadata', function() {
         let duration:number = Math.ceil(this.duration());
-        self.duration = duration;
-        self.cropTo = duration;
+        self.duration.next(duration);
       });
     });
   }
 
   crop(event): void {
     event.preventDefault();
-    this.videoService.crop(this.video.id, this.cropFrom, this.cropTo);
+    // this.videoService.crop(this.video.id, this.cropFrom, this.cropTo);
   }
 
   delete(event): void {

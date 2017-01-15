@@ -6,7 +6,6 @@
   <a href="#" (click)="delete($event)"><i class="fa fa-remove"></i></a>
   <a href="#" (click)="crop($event)"><i class="fa fa-cut"></i></a>
   <div>
-    <input [(ngModel)]="cropFrom" type="range" min="0" max="{{duration}}" step="1">
-    <input [(ngModel)]="cropTo" type="range" min="0" max="{{duration}}" step="1">
+    <input #crop [(ngModel)]="cropValue" type="text" />
   </div>
 </div>

@@ -1,11 +1,10 @@
 import 'rxjs/add/operator/switchMap';
-import {Renderer, QueryList, ViewChildren, Component, OnInit, AfterViewInit} from '@angular/core';
+import {QueryList, ViewChildren, Component, OnInit, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { VideoService } from '../video.service';
 import { Video } from '../video';
 import {Subject} from "rxjs";
 
-declare var jQuery:any;
 declare var $:any;
 
 @Component({
@@ -22,8 +21,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
 
   constructor(
     private videoService: VideoService,
-    private route: ActivatedRoute,
-    private renderer: Renderer
+    private route: ActivatedRoute
   ) {
   }
 
@@ -36,12 +34,37 @@ export class VideoComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     var self = this;
 
-    this.duration.subscribe((value) => {
+    this.duration.subscribe((duration) => {
       $(this.cropView.first.nativeElement).ionRangeSlider({
         type:'double',
         min: 0,
-        max: value,
+        max: duration,
         grid: true,
+        prettify: function (num) {
+          var values = [],
+              hours = 0;
+
+          if (num > 3600) {
+            hours = Math.floor(num / 3600);
+            values.push(hours);
+          }
+
+          var minutes = Math.floor((num - 3600*hours)/60);
+          if (minutes < 10) {
+            values.push("0"+minutes);
+          } else {
+            values.push(minutes);
+          }
+
+          var seconds = num - 60*minutes - 3600*hours;
+          if (seconds < 10) {
+            values.push("0"+seconds);
+          } else {
+            values.push(seconds)
+          }
+
+          return values.join(":")
+        }
       });
     });
 
@@ -53,9 +76,10 @@ export class VideoComponent implements OnInit, AfterViewInit {
     });
   }
 
-  crop(event): void {
+  cut(event): void {
     event.preventDefault();
-    // this.videoService.crop(this.video.id, this.cropFrom, this.cropTo);
+    var cropValues = $(this.cropView.first.nativeElement).val().split(";");
+    this.videoService.crop(this.video.id, cropValues[0], cropValues[1]);
   }
 
   delete(event): void {

@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/switchMap';
-import {QueryList, ViewChildren, Component, OnInit, AfterViewInit} from '@angular/core';
+import {ViewChildren, Component, OnInit, AfterViewInit} from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { VideoService } from '../video.service';
 import { Video } from '../video';
@@ -18,6 +18,7 @@ export class VideoComponent implements OnInit, AfterViewInit {
   @ViewChildren('crop') cropView: any;
   duration: any = new Subject();
   cropValue: number = 0;
+  cropSlider: any;
 
   constructor(
     private videoService: VideoService,
@@ -28,15 +29,23 @@ export class VideoComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.route.params
       .switchMap((params: Params) => this.videoService.loadItem(+params['id']))
-      .subscribe(video => this.video = video)
+      .subscribe(video => {
+        this.video = video;
+      })
   }
 
   ngAfterViewInit() {
     var self = this;
 
-    this.duration.subscribe((duration) => {
+    this.duration.subscribe(duration => {
+      if (this.cropSlider) {
+        this.cropSlider.destroy();
+      }
+
       $(this.cropView.first.nativeElement).ionRangeSlider({
         type:'double',
+        from: 0,
+        to: duration,
         min: 0,
         max: duration,
         grid: true,
@@ -66,7 +75,15 @@ export class VideoComponent implements OnInit, AfterViewInit {
           return values.join(":")
         }
       });
+
+      this.cropSlider = $(this.cropView.first.nativeElement).data('ionRangeSlider');
+
+      this.cropSlider.update({
+        from: 0,
+        to: duration
+      })
     });
+
 
     this.player.changes.subscribe(() => {
       let video = videojs(this.player.first.nativeElement).on('loadedmetadata', function() {

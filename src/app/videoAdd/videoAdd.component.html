@@ -1,9 +1,21 @@
-<form (submit)="save()">
-  <input [(ngModel)]="item.url" name="video[url]" type="text" class="form-control" />
-  <input class="btn btn-primary" type="submit" value="Go" />
-</form>
+<div class="card mt-4">
+  <div class="card-block">
+    <h4 class="card-title">Add by url</h4>
+    <form class="form-inline" (submit)="save()">
+        <input [(ngModel)]="item.url" name="video[url]" type="text" class="form-control" />
+        <input class="btn btn-primary" type="submit" value="Go" />
+    </form>
+  </div>
+</div>
 
-<form (submit)="upload()">
-  <input (change)="addFile($event)" multiple type="file" />
-  <input class="btn btn-primary" type="submit" value="Go" />
-</form>
+<div class="card mt-4">
+  <div class="card-block">
+    <form class="form-inline" (submit)="upload()">
+      <label class="custom-file">
+        <input (change)="addFile($event)" multiple class="custom-file-input" type="file" />
+        <span class="custom-file-control"></span>
+      </label>
+      <input class="btn btn-primary" type="submit" value="Go" />
+    </form>
+  </div>
+</div>
